@@ -156,10 +156,10 @@ footer a:hover{color:var(--pink);border-bottom-color:var(--pink-soft)}
 
 <footer>—— 于 <a href="index.html">主页</a> 之外单独留一页 ——</footer>
 
-<div class="player" id="player" hidden>
+<div class="player" id="player">
   <button class="player-btn" id="musicBtn" type="button" aria-label="播放或暂停背景音乐">♪</button>
   <span class="player-tip" id="musicTip">点击播放</span>
-  <audio id="bgm" loop preload="none">
+  <audio id="bgm" loop preload="metadata">
     <source src="meow.mp3" type="audio/mpeg">
     <source src="meow.ogg" type="audio/ogg">
   </audio>
@@ -184,30 +184,32 @@ footer a:hover{color:var(--pink);border-bottom-color:var(--pink-soft)}
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); purr(); }
   });
 
-  /* ---- 背景音乐 ---- */
+    /* ---- 背景音乐 ---- */
   var player = document.getElementById('player');
   var bgm = document.getElementById('bgm');
   var btn = document.getElementById('musicBtn');
   var tip = document.getElementById('musicTip');
   var KEY = 'meow-music';
-  var available = false;
+  var broken = false;
 
   function ui(playing){
     player.classList.toggle('playing', playing);
-    btn.textContent = playing ? '❚❚' : '♪';
+    btn.textContent = playing ? '\u275A\u275A' : '\u266A';
     btn.setAttribute('aria-label', playing ? '暂停背景音乐' : '播放背景音乐');
     tip.textContent = playing ? '正在播放' : '点击播放';
   }
-  function fail(){ player.hidden = true; }
+  function fail(){ broken = true; player.hidden = true; }
   function tryPlay(){
+    if (broken) return;
     var p = bgm.play();
     if (p && typeof p.catch === 'function') {
-      p.catch(function(){ ui(false); });
+      p.catch(function(err){
+        ui(false);
+        if (err && err.name === 'NotSupportedError') fail();
+      });
     }
   }
 
-  bgm.addEventListener('canplay', function(){ available = true; player.hidden = false; });
-  bgm.addEventListener('loadedmetadata', function(){ available = true; player.hidden = false; });
   bgm.addEventListener('play',  function(){ ui(true);  });
   bgm.addEventListener('pause', function(){ ui(false); });
   bgm.addEventListener('error', fail, true);
@@ -225,16 +227,12 @@ footer a:hover{color:var(--pink);border-bottom-color:var(--pink-soft)}
     }
   });
 
-  /* 音频就绪后：上次开着就尝试续播（浏览器可能拦截，拦截了显示按钮即可） */
-  bgm.addEventListener('canplay', function(){
+  /* 元数据加载成功 = 文件确实存在；顺便尝试续播上次的开关 */
+  bgm.addEventListener('loadedmetadata', function(){
     var want = '0';
     try { want = localStorage.getItem(KEY); } catch(e){}
     if (want === '1') tryPlay();
-  }, { once: true });
-
-  /* 兜底：4 秒内没有拿到任何音频元数据，说明文件还没放进来 */
-  setTimeout(function(){ if (!available) fail(); }, 4000);
-})();
+  }, { once: true });})();
 </script>
 </body>
 </html>
