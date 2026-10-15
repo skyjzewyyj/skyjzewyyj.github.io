@@ -341,6 +341,79 @@ footer a:hover{color:var(--accent)}
 .proj:hover::after,.fact:hover::after,.c-item:hover::after{opacity:1}
 
 @media (prefers-reduced-motion:reduce){ .glow{display:none} }
+/* ============================================================
+   彩蛋 · 我的猫猫
+   （刻意的画风反差：明亮 / 柔软 / 圆润 / 粉白奶油）
+   ============================================================ */
+.meow{position:relative;overflow:hidden;padding:clamp(56px,9vh,104px) 24px;
+  background:linear-gradient(180deg,#fff6fa 0%,#ffeaf3 38%,#fff7ef 100%);
+  color:#6b564d;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  border-top:1px solid rgba(255,255,255,.7)}
+.meow[hidden]{display:none}
+.meow::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:
+    radial-gradient(58% 40% at 10% 6%, rgba(255,193,220,.55), transparent 62%),
+    radial-gradient(55% 45% at 94% 94%, rgba(255,226,186,.5), transparent 64%)}
+.meow-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;text-align:center}
+.meow-kicker{display:inline-block;font-size:11.5px;letter-spacing:.3em;color:#e0859f;
+  background:#fff;border:2px dashed #ffc7dc;border-radius:999px;padding:5px 16px;margin-bottom:22px}
+.meow-title{font-family:"Noto Serif SC","Songti SC",serif;font-weight:900;
+  font-size:clamp(30px,6vw,46px);line-height:1.15;color:#66463f;margin-bottom:12px}
+.meow-title em{font-style:normal;color:#e0859f}
+.meow-sub{font-size:15px;color:#ab8e88;margin-bottom:30px}
+.meow-text{font-size:17.5px;line-height:2;color:#6b564d;max-width:30em;margin:0 auto 38px}
+.meow-text strong{color:#e0859f;font-weight:700}
+
+/* 像素猫舞台 */
+.meow-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:46px}
+.meow-pet{position:relative;cursor:pointer;padding:28px 32px 20px;border-radius:26px;
+  background:#fff;border:3px solid #ffe0ec;outline:none;
+  box-shadow:0 14px 0 -2px #ffe0ec, 0 22px 40px -18px rgba(224,133,159,.5);
+  transition:transform .25s cubic-bezier(.2,.9,.3,1.4), box-shadow .25s;
+  -webkit-tap-highlight-color:transparent}
+.meow-pet:hover,.meow-pet:focus-visible{transform:translateY(-4px) rotate(-1.2deg);
+  box-shadow:0 18px 0 -2px #ffe0ec, 0 26px 46px -18px rgba(224,133,159,.55)}
+.meow-pet:active{transform:translateY(2px) scale(.985)}
+.pixelcat{display:block;width:clamp(140px,30vw,190px);height:auto;
+  image-rendering:pixelated;image-rendering:crisp-edges;
+  animation:catBreathe 3.6s ease-in-out infinite}
+@keyframes catBreathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-3px) scaleY(1.015)}}
+
+/* 呼噜气泡 */
+.meow-bubble{position:absolute;left:50%;top:-4px;transform:translate(-50%,8px) scale(.85);
+  opacity:0;pointer-events:none;white-space:nowrap;
+  background:#fff;color:#e0859f;font-weight:700;font-size:15px;letter-spacing:.08em;
+  padding:9px 18px;border-radius:999px;border:3px solid #ffd3e3;
+  box-shadow:0 8px 22px -10px rgba(224,133,159,.7);
+  transition:opacity .45s ease, transform .45s cubic-bezier(.2,.9,.3,1.4)}
+.meow-bubble::after{content:"";position:absolute;left:50%;bottom:-9px;width:12px;height:12px;
+  margin-left:-7px;background:#fff;border-right:3px solid #ffd3e3;border-bottom:3px solid #ffd3e3;
+  transform:rotate(45deg);border-radius:0 0 4px 0}
+.meow-bubble.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.meow-hint{font-size:12.5px;color:#c4a7a1;letter-spacing:.1em}
+
+/* 拍立得照片 */
+.meow-photos{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.polaroid{position:relative;margin:0;background:#fff;padding:12px 12px 46px;border-radius:8px;
+  box-shadow:0 12px 30px -14px rgba(150,110,120,.55);transform:rotate(-2.4deg);
+  transition:transform .3s ease}
+.polaroid:nth-child(2){transform:rotate(2deg)}
+.polaroid:hover{transform:rotate(0) translateY(-5px) scale(1.02)}
+.polaroid img{display:block;width:clamp(170px,36vw,240px);height:clamp(170px,36vw,240px);
+  object-fit:cover;border-radius:4px;background:#f6f0ee}
+.polaroid figcaption{position:absolute;left:0;right:0;bottom:13px;text-align:center;
+  font-size:12.5px;color:#b79a95;letter-spacing:.06em}
+
+/* 页脚小爪印（彩蛋开关） */
+.paw{background:none;border:0;padding:4px 6px;margin-left:8px;cursor:pointer;
+  color:var(--ink-dim);opacity:.2;line-height:0;vertical-align:middle;
+  transition:opacity .25s, transform .25s, color .25s}
+.paw:hover,.paw:focus-visible{opacity:1;color:#e0859f;transform:scale(1.3) rotate(-8deg);outline:none}
+.paw svg{width:17px;height:17px;display:block}
+.paw svg path{fill:currentColor}
+body.meow-on .paw{opacity:.7}
+
+@media (max-width:520px){ .meow-pet{padding:22px 22px 16px} }
   </style>
  </head>
  <body>
@@ -397,7 +470,7 @@ footer a:hover{color:var(--accent)}
       <div class="facts">
         <div class="fact"><span class="fact-k">学校</span><span class="fact-v">沈阳理工大学</span></div>
         <div class="fact"><span class="fact-k">专业</span><span class="fact-v">探测制导与控制技术</span></div>
-        <div class="fact"><span class="fact-k">在学</span><span class="fact-v">C++ · Web 开发/span></div>
+        <div class="fact"><span class="fact-k">在学</span><span class="fact-v">C++ · Web 开发</span></div>
         <div class="fact"><span class="fact-k">兴趣</span><span class="fact-v">绘画 · 写作 · 诗词</span></div>
       </div>
     </div>
@@ -406,7 +479,7 @@ footer a:hover{color:var(--accent)}
 
 
   <!-- ===== 新增：作品 ===== -->
-  <section class="sec" id="projects" data-num="叁">
+  <section class="sec" id="projects" data-num="贰">
     <div class="sec-inner reveal">
       <div class="sec-kicker">Projects</div>
       <h2 class="sec-h">做过的东西</h2>
@@ -435,7 +508,7 @@ footer a:hover{color:var(--accent)}
   </section>
 
   <!-- ===== 新增：联系 ===== -->
-  <section class="sec" id="contact" data-num="肆">
+  <section class="sec" id="contact" data-num="叁">
     <div class="sec-inner reveal">
       <div class="sec-kicker">Contact</div>
       <h2 class="sec-h">别找我</h2>
@@ -460,9 +533,39 @@ footer a:hover{color:var(--accent)}
       </div>
     </div>
   </section>
+<!-- ===== 彩蛋 · 我的猫猫（默认隐藏；点页脚小爪印或输入 miao 触发）===== -->
+  <section class="meow" id="meow" hidden>
+    <div class="meow-inner">
+      <span class="meow-kicker">EASTER EGG</span>
+      <h2 class="meow-title">我的<em>猫猫</em></h2>
+      <p class="meow-sub">你居然发现了我精心隐藏（并非）的猫猫</p>
+
+      <p class="meow-text">这是<strong>小白熊</strong>，可以称得上我的家人，我的妹妹。<br>那……给你摸摸好了。</p>
+
+      <div class="meow-stage">
+        <div class="meow-pet" id="meowPet" role="button" tabindex="0" aria-label="摸摸小白熊">
+          <div class="meow-bubble" id="meowBubble">呼噜呼噜</div>
+          <svg class="pixelcat" viewBox="0 0 16 15" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" shape-rendering="crispEdges"><rect x="5" y="0" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="0" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="5" y="1" width="1" height="1" fill="#A6907F"/><rect x="6" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="9" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="1" width="1" height="1" fill="#A6907F"/><rect x="11" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="2" width="2" height="1" fill="#A6907F"/><rect x="6" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="9" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="2" width="2" height="1" fill="#A6907F"/><rect x="12" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="3" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="3" width="8" height="1" fill="#A6907F"/><rect x="12" y="3" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="4" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="4" width="10" height="1" fill="#A6907F"/><rect x="13" y="4" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="5" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="5" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="5" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="6" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="6" width="1" height="1" fill="#FBF3EA"/><rect x="4" y="6" width="2" height="1" fill="#8f7a6d"/><rect x="6" y="6" width="4" height="1" fill="#FBF3EA"/><rect x="10" y="6" width="2" height="1" fill="#8f7a6d"/><rect x="12" y="6" width="1" height="1" fill="#FBF3EA"/><rect x="13" y="6" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="7" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="7" width="1" height="1" fill="#FBF3EA"/><rect x="4" y="7" width="1" height="1" fill="#F2A7BC"/><rect x="5" y="7" width="2" height="1" fill="#FBF3EA"/><rect x="7" y="7" width="2" height="1" fill="#F2A7BC"/><rect x="9" y="7" width="2" height="1" fill="#FBF3EA"/><rect x="11" y="7" width="1" height="1" fill="#F2A7BC"/><rect x="12" y="7" width="1" height="1" fill="#FBF3EA"/><rect x="13" y="7" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="8" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="8" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="8" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="9" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="9" width="8" height="1" fill="#FBF3EA"/><rect x="12" y="9" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="10" width="2" height="1" fill="#8f7a6d"/><rect x="4" y="10" width="8" height="1" fill="#FBF3EA"/><rect x="12" y="10" width="2" height="1" fill="#8f7a6d"/><rect x="2" y="11" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="11" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="11" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="12" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="12" width="12" height="1" fill="#FBF3EA"/><rect x="15" y="12" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="13" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="13" width="12" height="1" fill="#FBF3EA"/><rect x="15" y="13" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="14" width="14" height="1" fill="#8f7a6d"/></svg>
+        </div>
+        <p class="meow-hint">点一下它 · 它会呼噜</p>
+      </div>
+
+      <div class="meow-photos">
+        <figure class="polaroid">
+          <img src="miao.jpg" alt="小白熊蜷成一团在粉色毯子上睡觉" loading="lazy">
+          <figcaption>缩成一团的小白熊</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img src="shuijiao.jpg" alt="小白熊盖着蓝灰色被子睡觉" loading="lazy">
+          <figcaption>被子底下的小白熊</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
 
   <footer>
     © <span id="year">2026</span> 张邵宁 &nbsp;|&nbsp; 托管于 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a>
+    <button class="paw" id="paw" type="button" title="？" aria-label="？"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 9.1c1.6 0 3.5 1.2 3.5 3 0 1.3-1.1 2.1-2.3 2.1-.6 0-1-.2-1.2-.2s-.6.2-1.2.2c-1.2 0-2.3-.8-2.3-2.1 0-1.8 1.9-3 3.5-3zM4.2 5.4c.8 0 1.5.9 1.4 1.9s-.8 1.7-1.5 1.7-1.5-.9-1.4-1.9.8-1.7 1.5-1.7zM11.8 5.4c.8 0 1.5.9 1.4 1.7s-.8 1.9-1.5 1.9-1.5-.9-1.4-1.7.8-1.9 1.5-1.9zM6.3 2.9c.7 0 1.3 1 1.3 2.1s-.5 2-1.2 2-1.3-1-1.3-2.1.5-2 1.2-2zM9.7 2.9c.7 0 1.3 1 1.3 2s-.5 2.1-1.2 2.1-1.3-1-1.3-2.1.5-2 1.2-2z"/></svg></button>
   </footer>
 
   <!-- ===== 新增：回到顶部 ===== -->
@@ -679,6 +782,44 @@ document.addEventListener('DOMContentLoaded', function(){
     entries.forEach(function(en){ en.target.classList.toggle('in-view', en.isIntersecting); });
   }, { threshold: 0.2 });
   secs.forEach(function(s){ secObs.observe(s); });
+
+  /* 9. 彩蛋 · 我的猫猫 */
+  var meow = document.getElementById('meow');
+  var meowPet = document.getElementById('meowPet');
+  var meowBubble = document.getElementById('meowBubble');
+  var pawBtn = document.getElementById('paw');
+  var purrTimer = null;
+
+  function purr(){
+    if (!meowBubble) return;
+    meowBubble.classList.add('show');
+    clearTimeout(purrTimer);
+    purrTimer = setTimeout(function(){ meowBubble.classList.remove('show'); }, 2000);
+  }
+  function openMeow(scroll){
+    if (!meow) return;
+    if (!meow.hidden) { purr(); return; }
+    meow.hidden = false;
+    document.body.classList.add('meow-on');
+    if (scroll !== false) {
+      setTimeout(function(){ meow.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+    }
+  }
+  if (pawBtn) pawBtn.addEventListener('click', function(){ openMeow(true); });
+  if (meowPet) {
+    meowPet.addEventListener('click', purr);
+    meowPet.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); purr(); }
+    });
+  }
+  /* 键盘彩蛋：依次敲 m i a o */
+  var keySeq = '';
+  document.addEventListener('keydown', function(e){
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    keySeq = (keySeq + (e.key || '').toLowerCase()).slice(-4);
+    if (keySeq === 'miao') { openMeow(true); keySeq = ''; }
+  });
 });
 
 /* 开场幕布 · 分阶段文字动画 */
