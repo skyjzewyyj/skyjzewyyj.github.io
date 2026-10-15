@@ -576,7 +576,6 @@ function goHome(){ document.getElementById("home").scrollIntoView({behavior:"smo
 cue.addEventListener("click", goHome);
 cue.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){e.preventDefault();goHome();} });
 
-});
 var toastEl=null;
 function toast(msg){
   if(!toastEl){ toastEl=document.createElement("div"); toastEl.style.cssText="position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#161828;border:1px solid var(--line);color:#ece9ff;padding:10px 18px;border-radius:999px;font-size:13px;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:opacity .3s"; document.body.appendChild(toastEl); }
