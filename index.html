@@ -237,23 +237,6 @@ footer a:hover{color:var(--accent)}
    新增样式 · 导航 / 内容区块 / 卡片 / 联系
    ============================================================ */
 
-/* --- 顶部导航（滚过封面后浮现） --- */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:40;
-  transform:translateY(-102%);
-  transition:transform .35s cubic-bezier(.2,.9,.3,1), border-color .3s ease;
-  background:rgba(10,11,16,.82);backdrop-filter:blur(12px);
-  border-bottom:1px solid transparent;
-}
-.nav.show{transform:translateY(0);border-bottom-color:var(--line)}
-.nav-inner{max-width:1040px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-brand{font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);text-decoration:none;letter-spacing:.08em;white-space:nowrap}
-.nav-links{display:flex;gap:2px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{font-size:13.5px;color:var(--ink-dim);text-decoration:none;padding:7px 13px;border-radius:999px;white-space:nowrap;transition:color .2s, background .2s}
-.nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
-.nav-links a.active{color:var(--accent);background:rgba(167,139,250,.1)}
-
 /* --- 通用区块 --- */
 .sec{position:relative;padding:clamp(64px,10vh,112px) 24px;border-top:1px solid var(--line)}
 .sec-inner{max-width:720px;margin:0 auto}
@@ -316,9 +299,52 @@ footer a:hover{color:var(--accent)}
   .sec{padding-left:24px;padding-right:24px}
   .contact-list{gap:12px}
 }
+/* ============================================================
+   特色层 · 滚动进度 / 竖排章节水印 / 光标柔光 / 卡片辉光
+   ============================================================ */
+
+/* --- 顶部滚动进度线（取代导航栏） --- */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  box-shadow:0 0 12px rgba(167,139,250,.7)}
+
+/* --- 光标柔光 --- */
+.glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;
+  z-index:1;pointer-events:none;opacity:0;transition:opacity .8s ease;
+  background:radial-gradient(circle, rgba(167,139,250,.10), rgba(125,211,252,.045) 42%, transparent 70%);
+  mix-blend-mode:screen;will-change:transform}
+.glow.on{opacity:1}
+@media (hover:none),(pointer:coarse){ .glow{display:none} }
+
+/* --- 竖排章节水印 --- */
+.sec{overflow:hidden}
+.sec-inner{position:relative;z-index:2}
+.sec::before{
+  content:attr(data-num);
+  position:absolute;right:clamp(6px,3vw,52px);top:50%;
+  transform:translateY(-50%) scale(.94);
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(76px,11vw,138px);line-height:1;
+  color:rgba(167,139,250,.05);
+  pointer-events:none;user-select:none;
+  transition:color .9s ease, transform .9s cubic-bezier(.2,.9,.3,1)}
+.sec.in-view::before{color:rgba(167,139,250,.10);transform:translateY(-50%) scale(1)}
+@media (max-width:760px){ .sec::before{display:none} }
+
+/* --- 卡片光标辉光 --- */
+.proj,.fact,.c-item{position:relative;overflow:hidden}
+.proj::after,.fact::after,.c-item::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(167,139,250,.16), transparent 68%);
+  opacity:0;transition:opacity .3s ease}
+.proj:hover::after,.fact:hover::after,.c-item:hover::after{opacity:1}
+
+@media (prefers-reduced-motion:reduce){ .glow{display:none} }
   </style>
  </head>
  <body>
+<div class="progress" id="progress"></div>
 <!-- 开场幕布 -->
 <div class="curtain" id="curtain">
 	<div class="curtain-top"></div>
@@ -329,21 +355,7 @@ footer a:hover{color:var(--accent)}
 	</div>
 </div>
 
-<!-- ===== 新增：顶部导航 ===== -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a class="nav-brand" href="#cover">倚风道人</a>
-    <div class="nav-links" id="navLinks">
-      <a href="#home">主页</a>
-      <a href="#about">关于</a>
-      <a href="#skills">技能</a>
-      <a href="#projects">作品</a>
-      <a href="#contact">联系</a>
-    </div>
-  </div>
-</nav>
-
-  <!-- ===== 视图：首屏封面（图片 + 热点） ===== -->
+<!-- ===== 视图：首屏封面（图片 + 热点） ===== -->
   <section class="cover" id="cover">
    <div class="cover-hint">"竟然真会有人来到这，真是欢迎……"</div>
    <div class="stage" id="stage">
@@ -375,7 +387,7 @@ footer a:hover{color:var(--accent)}
   </section>
 
   <!-- ===== 新增：关于 ===== -->
-  <section class="sec" id="about">
+  <section class="sec" id="about" data-num="壹">
     <div class="sec-inner reveal">
       <div class="sec-kicker">About</div>
       <h2 class="sec-h">关于我</h2>
@@ -392,7 +404,7 @@ footer a:hover{color:var(--accent)}
   </section>
 
   <!-- ===== 新增：技能 ===== -->
-  <section class="sec" id="skills">
+  <section class="sec" id="skills" data-num="贰">
     <div class="sec-inner reveal">
       <div class="sec-kicker">Skills</div>
       <h2 class="sec-h">技能与方向</h2>
@@ -431,7 +443,7 @@ footer a:hover{color:var(--accent)}
   </section>
 
   <!-- ===== 新增：作品 ===== -->
-  <section class="sec" id="projects">
+  <section class="sec" id="projects" data-num="叁">
     <div class="sec-inner reveal">
       <div class="sec-kicker">Projects</div>
       <h2 class="sec-h">做过的东西</h2>
@@ -460,7 +472,7 @@ footer a:hover{color:var(--accent)}
   </section>
 
   <!-- ===== 新增：联系 ===== -->
-  <section class="sec" id="contact">
+  <section class="sec" id="contact" data-num="肆">
     <div class="sec-inner reveal">
       <div class="sec-kicker">Contact</div>
       <h2 class="sec-h">找我</h2>
@@ -620,31 +632,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var y = document.getElementById('year');
   if (y) { y.textContent = new Date().getFullYear(); }
 
-  /* 2. 导航：滚过封面后浮现，并高亮当前区块 */
-  var nav = document.getElementById('nav');
-  var homeSection = document.getElementById('home');
-  var navAnchors = Array.prototype.slice.call(document.querySelectorAll('#navLinks a'));
-  var sections = navAnchors.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
-
-  var navObs = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if (en.target === homeSection) {
-        nav.classList.toggle('show', !en.isIntersecting);
-      }
-    });
-  }, { threshold: 0.08 });
-  if (homeSection) navObs.observe(homeSection);
-
-  var activeObs = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if (!en.isIntersecting) return;
-      var id = '#' + en.target.id;
-      navAnchors.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === id); });
-    });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  sections.forEach(function(s){ activeObs.observe(s); });
-
-  /* 3. 滚动浮现 */
+  /* 2. 滚动浮现 */
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var revObs = new IntersectionObserver(function(entries){
@@ -657,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function(){
     reveals.forEach(function(el){ el.classList.add('in'); });
   }
 
-  /* 4. 一键复制 */
+  /* 3. 一键复制 */
   document.querySelectorAll('.copy').forEach(function(btn){
     btn.addEventListener('click', function(){
       var text = btn.getAttribute('data-copy') || '';
@@ -680,12 +668,54 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  /* 5. 回到顶部 */
+  /* 4. 回到顶部 */
   var totop = document.getElementById('totop');
   window.addEventListener('scroll', function(){
     totop.classList.toggle('show', window.scrollY > window.innerHeight * 0.8);
   }, { passive: true });
   totop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  /* 5. 顶部滚动进度线 */
+  var progress = document.getElementById('progress');
+  function updateProgress(){
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  /* 6. 光标柔光跟随 */
+  var glow = document.getElementById('glow');
+  if (glow && window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    var tx = 0, ty = 0, cx = 0, cy = 0, started = false;
+    document.addEventListener('mousemove', function(e){
+      cx = e.clientX; cy = e.clientY;
+      if (!started) { tx = cx; ty = cy; glow.classList.add('on'); started = true; }
+    });
+    (function tick(){
+      tx += (cx - tx) * 0.12;
+      ty += (cy - ty) * 0.12;
+      glow.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* 7. 卡片光标辉光 */
+  document.querySelectorAll('.proj, .fact, .c-item').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  /* 8. 章节水印进入视口时点亮 */
+  var secs = document.querySelectorAll('.sec[data-num]');
+  var secObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ en.target.classList.toggle('in-view', en.isIntersecting); });
+  }, { threshold: 0.2 });
+  secs.forEach(function(s){ secObs.observe(s); });
 });
 
 /* 开场幕布 · 分阶段文字动画 */
@@ -721,5 +751,6 @@ window.addEventListener('DOMContentLoaded', function() {
 	}, 3600);
 });
   </script>
- </body>
+ <div class="glow" id="glow" aria-hidden="true"></div>
+</body>
 </html>
