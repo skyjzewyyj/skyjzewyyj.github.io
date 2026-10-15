@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffeaf3">
+<title>我的猫猫 · skyjzewyyj</title>
+<meta name="description" content="彩蛋页：小白熊。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23ffeaf3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23e0859f'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
+<link rel="preload" as="style" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;700&display=swap"></noscript>
+<style>
+:root{
+  --ink:#6b564d;--ink-dim:#ab8e88;--ink-faint:#c4a7a1;
+  --pink:#e0859f;--pink-soft:#ffd3e3;--pink-line:#ffe0ec;--cream:#fff7ef;
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;font-family:var(--sans);color:var(--ink);
+  background:linear-gradient(180deg,#fff6fa 0%,#ffeaf3 38%,#fff7ef 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.6;
+  background:
+    radial-gradient(58% 40% at 10% 6%, rgba(255,193,220,.55), transparent 62%),
+    radial-gradient(55% 45% at 94% 94%, rgba(255,226,186,.5), transparent 64%)}
+::selection{background:var(--pink);color:#fff}
+
+/* 返回 */
+.back{position:fixed;left:18px;top:18px;z-index:20;display:inline-flex;align-items:center;gap:7px;
+  font-size:14px;color:#a9818c;text-decoration:none;background:rgba(255,255,255,.82);
+  border:2px solid var(--pink-line);border-radius:999px;padding:9px 18px 9px 14px;
+  backdrop-filter:blur(8px);box-shadow:0 6px 18px -10px rgba(224,133,159,.8);
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.4), color .22s, border-color .22s}
+.back:hover,.back:focus-visible{color:var(--pink);border-color:var(--pink-soft);transform:translateX(-3px);outline:none}
+.back span{font-size:16px;line-height:1}
+
+/* 主体 */
+.meow{position:relative;z-index:1;max-width:760px;margin:0 auto;
+  padding:clamp(84px,12vh,132px) 24px clamp(96px,14vh,150px);text-align:center}
+.meow-kicker{display:inline-block;font-size:11.5px;letter-spacing:.3em;color:var(--pink);
+  background:#fff;border:2px dashed #ffc7dc;border-radius:999px;padding:5px 16px;margin-bottom:22px}
+.meow-title{font-family:var(--serif);font-weight:900;font-size:clamp(30px,6vw,46px);
+  line-height:1.15;color:#66463f;margin-bottom:12px}
+.meow-title em{font-style:normal;color:var(--pink)}
+.meow-sub{font-size:15px;color:var(--ink-dim);margin-bottom:30px}
+.meow-text{font-size:17.5px;line-height:2;color:var(--ink);max-width:30em;margin:0 auto 38px}
+.meow-text strong{color:var(--pink);font-weight:700}
+
+/* 像素猫 */
+.meow-stage{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:46px}
+.meow-pet{position:relative;cursor:pointer;padding:28px 32px 20px;border-radius:26px;outline:none;
+  background:#fff;border:3px solid var(--pink-line);
+  box-shadow:0 14px 0 -2px var(--pink-line), 0 22px 40px -18px rgba(224,133,159,.5);
+  transition:transform .25s cubic-bezier(.2,.9,.3,1.4), box-shadow .25s;
+  -webkit-tap-highlight-color:transparent}
+.meow-pet:hover,.meow-pet:focus-visible{transform:translateY(-4px) rotate(-1.2deg);
+  box-shadow:0 18px 0 -2px var(--pink-line), 0 26px 46px -18px rgba(224,133,159,.55)}
+.meow-pet:active{transform:translateY(2px) scale(.985)}
+.pixelcat{display:block;width:clamp(140px,30vw,190px);height:auto;
+  image-rendering:pixelated;image-rendering:crisp-edges;
+  animation:catBreathe 3.6s ease-in-out infinite}
+@keyframes catBreathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-3px) scaleY(1.015)}}
+.meow-bubble{position:absolute;left:50%;top:-4px;transform:translate(-50%,8px) scale(.85);
+  opacity:0;pointer-events:none;white-space:nowrap;
+  background:#fff;color:var(--pink);font-weight:700;font-size:15px;letter-spacing:.08em;
+  padding:9px 18px;border-radius:999px;border:3px solid var(--pink-soft);
+  box-shadow:0 8px 22px -10px rgba(224,133,159,.7);
+  transition:opacity .45s ease, transform .45s cubic-bezier(.2,.9,.3,1.4)}
+.meow-bubble::after{content:"";position:absolute;left:50%;bottom:-9px;width:12px;height:12px;
+  margin-left:-7px;background:#fff;border-right:3px solid var(--pink-soft);
+  border-bottom:3px solid var(--pink-soft);transform:rotate(45deg);border-radius:0 0 4px 0}
+.meow-bubble.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.meow-hint{font-size:12.5px;color:var(--ink-faint);letter-spacing:.1em}
+
+/* 拍立得 */
+.meow-photos{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.polaroid{position:relative;margin:0;background:#fff;padding:12px 12px 46px;border-radius:8px;
+  box-shadow:0 12px 30px -14px rgba(150,110,120,.55);transform:rotate(-2.4deg);
+  transition:transform .3s ease}
+.polaroid:nth-child(2){transform:rotate(2deg)}
+.polaroid:hover{transform:rotate(0) translateY(-5px) scale(1.02)}
+.polaroid img{display:block;width:clamp(170px,36vw,240px);height:clamp(170px,36vw,240px);
+  object-fit:cover;border-radius:4px;background:#f6f0ee}
+.polaroid figcaption{position:absolute;left:0;right:0;bottom:13px;text-align:center;
+  font-size:12.5px;color:#b79a95;letter-spacing:.06em}
+
+/* 音乐播放器 */
+.player{position:fixed;right:18px;bottom:18px;z-index:20;display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.86);border:2px solid var(--pink-line);border-radius:999px;
+  padding:7px 16px 7px 7px;backdrop-filter:blur(8px);
+  box-shadow:0 10px 26px -14px rgba(224,133,159,.9)}
+.player[hidden]{display:none}
+.player-btn{width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--pink);color:#fff;font-size:14px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s cubic-bezier(.2,.9,.3,1.4), background .2s;font-family:inherit}
+.player-btn:hover{transform:scale(1.08);background:#d4738e}
+.player-btn:active{transform:scale(.94)}
+.player-tip{font-size:12.5px;color:#b0848f;letter-spacing:.06em;padding-right:4px}
+.player.playing .player-tip{color:var(--pink)}
+.player.playing .player-btn{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.player.playing .player-btn:hover{animation-play-state:paused}
+
+footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--ink-faint);
+  padding:0 24px 96px;letter-spacing:.08em}
+footer a{color:var(--ink-dim);text-decoration:none;border-bottom:1px solid transparent}
+footer a:hover{color:var(--pink);border-bottom-color:var(--pink-soft)}
+
+@media (max-width:520px){
+  .meow-pet{padding:22px 22px 16px}
+  .back{left:12px;top:12px;font-size:13px;padding:8px 14px 8px 11px}
+  .player{right:12px;bottom:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html"><span>←</span>回主页</a>
+
+<main class="meow">
+  <span class="meow-kicker">EASTER EGG</span>
+  <h1 class="meow-title">我的<em>猫猫</em></h1>
+  <p class="meow-sub">你居然发现了我精心隐藏（并非）的猫猫</p>
+
+  <p class="meow-text">这是<strong>小白熊</strong>，可以称得上我的家人，我的妹妹。<br>那……给你摸摸好了。</p>
+
+  <div class="meow-stage">
+    <div class="meow-pet" id="meowPet" role="button" tabindex="0" aria-label="摸摸小白熊">
+      <div class="meow-bubble" id="meowBubble">呼噜呼噜</div>
+      <svg class="pixelcat" viewBox="0 0 16 15" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" shape-rendering="crispEdges"><rect x="5" y="0" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="0" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="5" y="1" width="1" height="1" fill="#A6907F"/><rect x="6" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="9" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="1" width="1" height="1" fill="#A6907F"/><rect x="11" y="1" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="2" width="2" height="1" fill="#A6907F"/><rect x="6" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="9" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="10" y="2" width="2" height="1" fill="#A6907F"/><rect x="12" y="2" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="3" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="3" width="8" height="1" fill="#A6907F"/><rect x="12" y="3" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="4" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="4" width="10" height="1" fill="#A6907F"/><rect x="13" y="4" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="5" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="5" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="5" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="6" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="6" width="1" height="1" fill="#FBF3EA"/><rect x="4" y="6" width="2" height="1" fill="#8f7a6d"/><rect x="6" y="6" width="4" height="1" fill="#FBF3EA"/><rect x="10" y="6" width="2" height="1" fill="#8f7a6d"/><rect x="12" y="6" width="1" height="1" fill="#FBF3EA"/><rect x="13" y="6" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="7" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="7" width="1" height="1" fill="#FBF3EA"/><rect x="4" y="7" width="1" height="1" fill="#F2A7BC"/><rect x="5" y="7" width="2" height="1" fill="#FBF3EA"/><rect x="7" y="7" width="2" height="1" fill="#F2A7BC"/><rect x="9" y="7" width="2" height="1" fill="#FBF3EA"/><rect x="11" y="7" width="1" height="1" fill="#F2A7BC"/><rect x="12" y="7" width="1" height="1" fill="#FBF3EA"/><rect x="13" y="7" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="8" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="8" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="8" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="9" width="1" height="1" fill="#8f7a6d"/><rect x="4" y="9" width="8" height="1" fill="#FBF3EA"/><rect x="12" y="9" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="10" width="2" height="1" fill="#8f7a6d"/><rect x="4" y="10" width="8" height="1" fill="#FBF3EA"/><rect x="12" y="10" width="2" height="1" fill="#8f7a6d"/><rect x="2" y="11" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="11" width="10" height="1" fill="#FBF3EA"/><rect x="13" y="11" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="12" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="12" width="12" height="1" fill="#FBF3EA"/><rect x="15" y="12" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="13" width="1" height="1" fill="#8f7a6d"/><rect x="3" y="13" width="12" height="1" fill="#FBF3EA"/><rect x="15" y="13" width="1" height="1" fill="#8f7a6d"/><rect x="2" y="14" width="14" height="1" fill="#8f7a6d"/></svg>
+    </div>
+    <p class="meow-hint">点一下它 · 它会呼噜</p>
+  </div>
+
+  <div class="meow-photos">
+    <figure class="polaroid">
+      <img src="miao.jpg" alt="小白熊蜷成一团在粉色毯子上睡觉" width="960" height="1282" loading="lazy" decoding="async">
+      <figcaption>缩成一团的小白熊</figcaption>
+    </figure>
+    <figure class="polaroid">
+      <img src="shuijiao.jpg" alt="小白熊盖着蓝灰色被子睡觉" width="960" height="1282" loading="lazy" decoding="async">
+      <figcaption>被子底下的小白熊</figcaption>
+    </figure>
+  </div>
+</main>
+
+<footer>—— 于 <a href="index.html">主页</a> 之外单独留一页 ——</footer>
+
+<div class="player" id="player" hidden>
+  <button class="player-btn" id="musicBtn" type="button" aria-label="播放或暂停背景音乐">♪</button>
+  <span class="player-tip" id="musicTip">点击播放</span>
+  <audio id="bgm" loop preload="none">
+    <source src="meow.mp3" type="audio/mpeg">
+    <source src="meow.ogg" type="audio/ogg">
+  </audio>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---- 呼噜气泡 ---- */
+  var pet = document.getElementById('meowPet');
+  var bubble = document.getElementById('meowBubble');
+  var timer = null;
+  function purr(){
+    if (!bubble) return;
+    bubble.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ bubble.classList.remove('show'); }, 2000);
+  }
+  pet.addEventListener('click', purr);
+  pet.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); purr(); }
+  });
+
+  /* ---- 背景音乐 ---- */
+  var player = document.getElementById('player');
+  var bgm = document.getElementById('bgm');
+  var btn = document.getElementById('musicBtn');
+  var tip = document.getElementById('musicTip');
+  var KEY = 'meow-music';
+  var available = false;
+
+  function ui(playing){
+    player.classList.toggle('playing', playing);
+    btn.textContent = playing ? '❚❚' : '♪';
+    btn.setAttribute('aria-label', playing ? '暂停背景音乐' : '播放背景音乐');
+    tip.textContent = playing ? '正在播放' : '点击播放';
+  }
+  function fail(){ player.hidden = true; }
+  function tryPlay(){
+    var p = bgm.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function(){ ui(false); });
+    }
+  }
+
+  bgm.addEventListener('canplay', function(){ available = true; player.hidden = false; });
+  bgm.addEventListener('loadedmetadata', function(){ available = true; player.hidden = false; });
+  bgm.addEventListener('play',  function(){ ui(true);  });
+  bgm.addEventListener('pause', function(){ ui(false); });
+  bgm.addEventListener('error', fail, true);
+  Array.prototype.forEach.call(bgm.querySelectorAll('source'), function(s){
+    s.addEventListener('error', fail);
+  });
+
+  btn.addEventListener('click', function(){
+    if (bgm.paused) {
+      tryPlay();
+      try { localStorage.setItem(KEY, '1'); } catch(e){}
+    } else {
+      bgm.pause();
+      try { localStorage.setItem(KEY, '0'); } catch(e){}
+    }
+  });
+
+  /* 音频就绪后：上次开着就尝试续播（浏览器可能拦截，拦截了显示按钮即可） */
+  bgm.addEventListener('canplay', function(){
+    var want = '0';
+    try { want = localStorage.getItem(KEY); } catch(e){}
+    if (want === '1') tryPlay();
+  }, { once: true });
+
+  /* 兜底：4 秒内没有拿到任何音频元数据，说明文件还没放进来 */
+  setTimeout(function(){ if (!available) fail(); }, 4000);
+})();
+</script>
+</body>
+</html>
