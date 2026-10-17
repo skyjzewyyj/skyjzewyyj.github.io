@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
 <link rel="preload" as="style" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<link rel="preload" as="image" href="zhuo.png">
 <noscript><link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"></noscript>
 <style>
 :root{
@@ -27,6 +28,8 @@
   --ink-faint:#6c6985;
   --accent:#a78bfa;
   --accent-2:#7dd3fc;
+  --gold:#f4cd80;
+  --gold-deep:#ffb45a;
   --line:rgba(236,233,255,.14);
   --serif:"Noto Serif SC","Songti SC","SimSun",serif;
   --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
@@ -39,29 +42,85 @@ a{-webkit-tap-highlight-color:transparent}
 strong{color:var(--ink);font-weight:500}
 
 /* ============================================================
-   入场 · 光隙展开
+   开场 · 抽卡「出金」
    ============================================================ */
-.gate{position:fixed;inset:0;z-index:9000;pointer-events:none}
+.gate{position:fixed;inset:0;z-index:9000;pointer-events:none;background:#06070b;overflow:hidden}
 .gate[hidden]{display:none}
 .gate-panel{position:absolute;left:0;width:100%;height:50%;background:#06070b;
-  transition:transform 1.15s cubic-bezier(.77,0,.175,1) .6s}
+  transition:transform 1.3s cubic-bezier(.77,0,.175,1) 2.45s}
 .gate-top{top:0}
 .gate-bottom{bottom:0}
 .gate.open .gate-panel.gate-top{transform:translateY(-100%)}
 .gate.open .gate-panel.gate-bottom{transform:translateY(100%)}
-.gate-line{position:absolute;left:50%;top:50%;width:0;height:1.5px;transform:translate(-50%,-50%);
-  background:linear-gradient(90deg,transparent,var(--accent),var(--accent-2),var(--accent),transparent);
-  box-shadow:0 0 20px rgba(167,139,250,.95);animation:lineGrow .75s cubic-bezier(.2,.9,.3,1) .16s forwards}
-@keyframes lineGrow{to{width:min(580px,80vw)}}
-.gate-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.88);opacity:0;
-  font-family:var(--serif);font-weight:900;letter-spacing:.42em;font-size:clamp(15px,2.4vw,21px);
-  color:var(--accent);text-shadow:0 0 24px rgba(167,139,250,.6);animation:markIn .85s ease .38s forwards}
-@keyframes markIn{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-.gate.open .gate-mark{opacity:0;transition:opacity .35s ease}
-.gate.open .gate-line{opacity:0;transition:opacity .35s ease}
+
+.gacha{position:absolute;left:50%;top:50%;width:0;height:0}
+
+/* 金色光晕 */
+.gacha-glow{position:absolute;left:50%;top:50%;width:640px;height:640px;margin:-320px 0 0 -320px;
+  border-radius:50%;opacity:0;
+  background:radial-gradient(circle,rgba(244,205,128,.45),rgba(255,180,90,.16) 40%,transparent 68%);
+  animation:glowIn 1.3s ease .5s forwards, glowPulse 2.4s ease-in-out 1.5s infinite}
+@keyframes glowIn{to{opacity:1}}
+@keyframes glowPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* 旋转光芒 */
+.gacha-spin{position:absolute;left:50%;top:50%;width:0;height:0;animation:spin 8s linear .5s infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gacha-rays{position:absolute;left:50%;top:50%;width:860px;height:860px;margin:-430px 0 0 -430px;
+  opacity:0;transform:scale(.15);
+  background:repeating-conic-gradient(from 0deg,
+    rgba(244,205,128,0) 0deg 6deg,
+    rgba(244,205,128,.9) 6deg 7.8deg,
+    rgba(244,205,128,0) 7.8deg 19deg);
+  -webkit-mask:radial-gradient(circle,#000 5%,rgba(0,0,0,.85) 32%,transparent 66%);
+  mask:radial-gradient(circle,#000 5%,rgba(0,0,0,.85) 32%,transparent 66%);
+  animation:raysIn 1.6s cubic-bezier(.2,.9,.3,1) .5s forwards}
+@keyframes raysIn{0%{opacity:0;transform:scale(.15)}100%{opacity:1;transform:scale(1)}}
+
+/* 扩散光环 */
+.gacha-ring{position:absolute;left:50%;top:50%;width:130px;height:130px;margin:-65px 0 0 -65px;
+  border-radius:50%;border:1.5px solid rgba(244,205,128,.95);opacity:0;
+  animation:ringOut 1.2s cubic-bezier(.2,.9,.3,1) .6s forwards}
+.gacha-ring-2{animation-delay:.88s;border-color:rgba(255,255,255,.7)}
+@keyframes ringOut{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(7)}}
+
+/* 闪光 */
+.gacha-flash{position:absolute;inset:0;opacity:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,#fff,rgba(255,240,200,.65) 26%,transparent 62%);
+  animation:flashIn .8s ease 1.06s forwards}
+@keyframes flashIn{0%{opacity:0}16%{opacity:.98}100%{opacity:0}}
+
+/* 徽记 */
+.gacha-emblem{position:absolute;left:50%;top:50%;width:clamp(120px,26vw,196px);height:auto;
+  transform:translate(-50%,-50%) scale(.2) rotate(-24deg);opacity:0;
+  filter:drop-shadow(0 0 12px rgba(244,205,128,.95)) drop-shadow(0 0 40px rgba(255,180,90,.7));
+  animation:emblemIn .95s cubic-bezier(.2,.9,.3,1.45) 1.16s forwards}
+@keyframes emblemIn{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-24deg)}
+  68%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(4deg)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+}
+
+/* SSR 标签 */
+.gacha-label{position:absolute;left:50%;top:calc(50% + clamp(84px,17vw,118px));
+  transform:translate(-50%,10px);opacity:0;white-space:nowrap;
+  font-family:var(--serif);font-weight:900;letter-spacing:.46em;font-size:clamp(15px,2.6vw,22px);
+  color:var(--gold);text-shadow:0 0 16px rgba(244,205,128,.95),0 0 46px rgba(255,180,90,.65);
+  animation:labelIn .85s cubic-bezier(.2,.9,.3,1) 1.5s forwards}
+@keyframes labelIn{to{opacity:1;transform:translate(-50%,0)}}
+
+/* 震屏 */
+.gate.shake{animation:shake .55s cubic-bezier(.36,.07,.19,.97) 1.04s}
+@keyframes shake{
+  0%,100%{transform:translate(0,0)}
+  15%{transform:translate(-5px,4px)}
+  35%{transform:translate(4px,-4px)}
+  55%{transform:translate(-3px,-3px)}
+  75%{transform:translate(3px,3px)}
+}
 
 /* ============================================================
-   首屏 · 主视觉
+   首屏
    ============================================================ */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;
   padding:clamp(80px,14vh,140px) 24px clamp(80px,12vh,120px);overflow:hidden}
@@ -97,11 +156,10 @@ strong{color:var(--ink);font-weight:500}
   animation:scrollLine 2.2s ease-in-out infinite}
 @keyframes scrollLine{0%,100%{transform:translateX(0);opacity:.4}50%{transform:translateX(8px);opacity:1}}
 
-/* 逐个浮现 */
 .rise{opacity:0;transform:translateY(22px);animation:riseIn .85s cubic-bezier(.2,.9,.3,1) forwards}
 @keyframes riseIn{to{opacity:1;transform:none}}
-.d1{animation-delay:1.10s}.d2{animation-delay:1.30s}.d3{animation-delay:1.50s}
-.d4{animation-delay:1.68s}.d5{animation-delay:1.86s}
+.d1{animation-delay:2.52s}.d2{animation-delay:2.66s}.d3{animation-delay:2.80s}
+.d4{animation-delay:2.94s}.d5{animation-delay:3.08s}
 
 /* ============================================================
    内容区块
@@ -145,10 +203,10 @@ strong{color:var(--ink);font-weight:500}
   border-radius:999px;background:rgba(255,255,255,.02);transition:border-color .2s,transform .2s}
 .tag:hover{transform:translateY(-2px)}
 .tag.learning{border-color:rgba(167,139,250,.5);color:var(--accent)}
-.tag.craft{border-color:rgba(244,180,120,.45);color:#f0b98a}
+.tag.craft{border-color:rgba(244,205,128,.45);color:var(--gold)}
 .tag.plan{color:var(--ink-dim)}
 
-/* 作品卡片（3D 倾斜） */
+/* 作品卡片 */
 .projects{display:grid;gap:13px;perspective:900px}
 .proj{display:block;text-decoration:none;border:1px solid var(--line);border-radius:14px;
   padding:20px 22px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.008));
@@ -180,19 +238,30 @@ strong{color:var(--ink);font-weight:500}
 .copy:hover{color:var(--ink);border-color:var(--accent)}
 .copy.done{color:var(--accent);border-color:var(--accent)}
 
-/* 页脚 + 彩蛋入口 */
+/* ===== 彩蛋入口（显眼） ===== */
+.egg-grid{display:grid;gap:13px;margin-top:34px}
+@media (min-width:640px){ .egg-grid{grid-template-columns:1fr 1fr} }
+.egg{display:flex;align-items:center;gap:18px;text-decoration:none;padding:20px 22px;
+  border:1px solid rgba(244,205,128,.22);border-radius:16px;
+  background:linear-gradient(180deg,rgba(244,205,128,.06),rgba(255,255,255,.008));
+  transition:border-color .25s, transform .3s cubic-bezier(.2,.9,.3,1), box-shadow .3s}
+.egg:hover,.egg:focus-visible{border-color:rgba(244,205,128,.75);transform:translateY(-3px);
+  box-shadow:0 22px 46px -26px rgba(244,205,128,.9);outline:none}
+.egg-icon-wrap{flex-shrink:0;width:66px;height:66px;display:flex;align-items:center;justify-content:center;
+  border-radius:15px;background:rgba(244,205,128,.08);border:1px solid rgba(244,205,128,.2)}
+.egg-icon{width:46px;height:46px;object-fit:contain;
+  filter:drop-shadow(0 0 10px rgba(244,205,128,.55));
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
+.egg:hover .egg-icon{transform:scale(1.12) rotate(-5deg)}
+.egg-paw{fill:var(--gold)}
+.egg-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.egg-name{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--ink)}
+.egg-desc{font-size:13px;color:var(--ink-faint);letter-spacing:.05em}
+
+/* 页脚 */
 footer{padding:34px 24px 44px;text-align:center;font-size:12.5px;color:var(--ink-faint);letter-spacing:.1em}
 footer a{color:var(--ink-dim);text-decoration:none;border-bottom:1px solid transparent}
 footer a:hover{color:var(--accent)}
-.paw{display:inline-block;padding:6px 8px;margin-left:10px;cursor:pointer;color:var(--ink-dim);
-  opacity:.24;line-height:0;vertical-align:middle;border-radius:8px;border-bottom:0!important;
-  transition:opacity .25s, transform .25s, color .25s}
-.paw:hover,.paw:focus-visible{opacity:1;color:#e0859f;transform:scale(1.18) rotate(-8deg);outline:none}
-.paw svg{width:26px;height:26px;display:block}
-.paw svg path{fill:currentColor}
-.paw-alt span{display:block;width:26px;height:26px;line-height:24px;text-align:center;
-  font-family:var(--serif);font-size:13px;border:1px solid currentColor;border-radius:50%}
-.paw-alt:hover,.paw-alt:focus-visible{color:var(--accent);transform:scale(1.18) rotate(8deg)}
 
 /* 顶部进度线 */
 .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
@@ -240,12 +309,19 @@ footer a:hover{color:var(--accent)}
 </head>
 <body>
 
-<!-- ===== 入场：光隙展开 ===== -->
+<!-- ===== 开场：抽卡出金 ===== -->
 <div class="gate" id="gate" aria-hidden="true">
   <div class="gate-panel gate-top"></div>
   <div class="gate-panel gate-bottom"></div>
-  <div class="gate-line"></div>
-  <div class="gate-mark">SKYJZEWYYJ</div>
+  <div class="gacha">
+    <div class="gacha-glow"></div>
+    <div class="gacha-spin"><span class="gacha-rays"></span></div>
+    <div class="gacha-ring"></div>
+    <div class="gacha-ring gacha-ring-2"></div>
+    <img class="gacha-emblem" src="zhuo.png" alt="" width="433" height="404">
+    <div class="gacha-flash"></div>
+    <div class="gacha-label">SSR</div>
+  </div>
 </div>
 
 <div class="progress" id="progress"></div>
@@ -383,10 +459,41 @@ footer a:hover{color:var(--accent)}
   </div>
 </section>
 
+<!-- ===== 伍 · 彩蛋入口 ===== -->
+<section class="sec" id="eggs" data-num="伍">
+  <div class="sec-inner reveal">
+    <div class="sec-kicker">Secret</div>
+    <h2 class="sec-h">彩蛋</h2>
+    <p class="sec-sub">页面里还藏了两样东西，愿意的话进来看看。</p>
+
+    <div class="egg-grid">
+      <a class="egg" href="yizhuo.html">
+        <span class="egg-icon-wrap">
+          <img class="egg-icon" src="zhuo.png" alt="" width="433" height="404" loading="lazy" decoding="async">
+        </span>
+        <span class="egg-meta">
+          <span class="egg-name">议桌</span>
+          <span class="egg-desc">六个人，一张桌子</span>
+        </span>
+      </a>
+
+      <a class="egg" href="meow.html">
+        <span class="egg-icon-wrap">
+          <svg class="egg-icon egg-paw" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 9.1c1.6 0 3.5 1.2 3.5 3 0 1.3-1.1 2.1-2.3 2.1-.6 0-1-.2-1.2-.2s-.6.2-1.2.2c-1.2 0-2.3-.8-2.3-2.1 0-1.8 1.9-3 3.5-3zM4.2 5.4c.8 0 1.5.9 1.4 1.9s-.8 1.7-1.5 1.7-1.5-.9-1.4-1.9.8-1.7 1.5-1.7zM11.8 5.4c.8 0 1.5.9 1.4 1.7s-.8 1.9-1.5 1.9-1.5-.9-1.4-1.7.8-1.9 1.5-1.9zM6.3 2.9c.7 0 1.3 1 1.3 2.1s-.5 2-1.2 2-1.3-1-1.3-2.1.5-2 1.2-2zM9.7 2.9c.7 0 1.3 1 1.3 2s-.5 2.1-1.2 2.1-1.3-1-1.3-2.1.5-2 1.2-2z"/>
+          </svg>
+        </span>
+        <span class="egg-meta">
+          <span class="egg-name">猫猫</span>
+          <span class="egg-desc">小白熊</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer>
   © <span id="year">2026</span> skyjzewyyj &nbsp;|&nbsp; 托管于 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a>
-  <a class="paw" href="meow.html" title="？" aria-label="？"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 9.1c1.6 0 3.5 1.2 3.5 3 0 1.3-1.1 2.1-2.3 2.1-.6 0-1-.2-1.2-.2s-.6.2-1.2.2c-1.2 0-2.3-.8-2.3-2.1 0-1.8 1.9-3 3.5-3zM4.2 5.4c.8 0 1.5.9 1.4 1.9s-.8 1.7-1.5 1.7-1.5-.9-1.4-1.9.8-1.7 1.5-1.7zM11.8 5.4c.8 0 1.5.9 1.4 1.7s-.8 1.9-1.5 1.9-1.5-.9-1.4-1.7.8-1.9 1.5-1.9zM6.3 2.9c.7 0 1.3 1 1.3 2.1s-.5 2-1.2 2-1.3-1-1.3-2.1.5-2 1.2-2zM9.7 2.9c.7 0 1.3 1 1.3 2s-.5 2.1-1.2 2.1-1.3-1-1.3-2.1.5-2 1.2-2z"/></svg></a>
-  <a class="paw paw-alt" href="yizhuo.html" title="？" aria-label="？"><span>桌</span></a>
 </footer>
 
 <button class="totop" id="totop" type="button" aria-label="回到顶部">
@@ -400,17 +507,20 @@ footer a:hover{color:var(--accent)}
 (function(){
   'use strict';
 
-  /* ---- 入场：光隙展开 ---- */
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ---- 开场：抽卡出金 ---- */
   var gate = document.getElementById('gate');
-  function openGate(){
-    if (!gate) return;
-    gate.classList.add('open');
-    setTimeout(function(){ gate.hidden = true; }, 2200);
-  }
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
-    if (gate) gate.hidden = true;
-  } else {
-    setTimeout(openGate, 1500);
+  var HERO_BASE = 2.5;   /* 首屏文字起始延迟(秒)，需与 CSS 的 .d1 对齐 */
+
+  if (gate) {
+    if (reduced) {
+      gate.hidden = true;
+    } else {
+      setTimeout(function(){ gate.classList.add('shake'); }, 1040);
+      setTimeout(function(){ gate.classList.add('open');  }, 2450);
+      setTimeout(function(){ gate.hidden = true; }, 4100);
+    }
   }
 
   /* ---- 主标题逐字浮现 ---- */
@@ -420,7 +530,7 @@ footer a:hover{color:var(--accent)}
     txt.split('').forEach(function(ch, i){
       var s = document.createElement('span');
       s.textContent = ch === ' ' ? '\u00A0' : ch;
-      s.style.transitionDelay = (1.02 + i * 0.06) + 's';
+      s.style.transitionDelay = (HERO_BASE + i * 0.06) + 's';
       el.appendChild(s);
     });
     requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('split-in'); }); });
@@ -498,10 +608,12 @@ footer a:hover{color:var(--accent)}
   }
 
   /* ---- 章节水印点亮 ---- */
-  var secObs = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){ en.target.classList.toggle('in-view', en.isIntersecting); });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.sec[data-num]').forEach(function(s){ secObs.observe(s); });
+  if ('IntersectionObserver' in window) {
+    var secObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ en.target.classList.toggle('in-view', en.isIntersecting); });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.sec[data-num]').forEach(function(s){ secObs.observe(s); });
+  }
 
   /* ---- 一键复制 ---- */
   var toastEl = document.getElementById('toast');
